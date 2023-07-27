@@ -13,5 +13,9 @@ public class BookCreateRequest {
     @JsonProperty
     private String synopsis;
     @JsonProperty
-    private List<String> genres;
+    private String writer;
+    @JsonProperty
+    private Double ranking;
+    @JsonProperty
+    private List<String> categories;
 }

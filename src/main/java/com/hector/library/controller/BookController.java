@@ -6,10 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/book")
@@ -25,4 +22,9 @@ public class BookController {
         return ResponseEntity.ok(bookService.createBook(bookCreateRequest));
     }
 
+    @GetMapping
+    @Operation(summary = "this method is used to get all the books")
+    public ResponseEntity<?> getAllBooks() {
+        return ResponseEntity.ok(bookService.getAllBooks());
+    }
 }

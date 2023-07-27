@@ -7,20 +7,17 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection = "book")
-public class Book implements Serializable {
+@Document(collection = "category")
+public class Category {
     @Id
     private String id;
-    private String tittle;
-    private String synopsis;
-    private Double ranking;
-    private String writer;
-    private List<String> categories;
+    private String name;
+    private List<BookCategory> books;
 }
+
