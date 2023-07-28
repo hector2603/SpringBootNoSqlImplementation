@@ -7,6 +7,8 @@ import com.hector.library.pojo.BookCreateRequest;
 import com.hector.library.repository.BookRepository;
 import com.hector.library.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -22,6 +24,9 @@ public class BookService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    CacheManager cacheManager;
+
     public Book createBook(BookCreateRequest bookCreateRequest){
         Book book = Book.builder()
                 .tittle(bookCreateRequest.getTittle())
@@ -33,9 +38,12 @@ public class BookService {
         book = bookRepository.save(book);
         Book finalBook = book;
         bookCreateRequest.getCategories().forEach(category -> addBookToCategory(category,finalBook));
+        cacheManager.getCache("Category").clear();
+        cacheManager.getCache("Books").clear();
         return book;
     }
 
+    @Cacheable(value= "Books")
     public List<Book> getAllBooks(){
         return bookRepository.findAll();
     }
